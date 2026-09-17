@@ -127,6 +127,30 @@
     .method div { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
     .method div:last-child { border-bottom: 0; }
   }
+
+  /* ── 모바일: 표를 가로로 밀지 않고 세로로 편다 ── */
+  @media (max-width: 620px) {
+    body { font-size: 15.5px; }
+    .wrap { padding-inline: 16px; padding-block: 40px 72px; }
+    .tablewrap { overflow-x: visible; border-top: 0; border-bottom: 0; }
+    table { min-width: 0; display: block; }
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    tbody, tr, td { display: block; width: 100%; }
+    tr { background: var(--surface); border: 1px solid var(--rule); padding: 13px 15px 14px; margin-bottom: 9px; }
+    tr:last-child { margin-bottom: 0; }
+    td { border: 0; padding: 4px 0; display: flex; justify-content: space-between; align-items: baseline; gap: 14px; text-align: right; }
+    td::before { content: attr(data-label); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); text-align: left; flex: 0 0 auto; }
+    td.name { display: block; text-align: left; font-size: 16.5px; padding: 0 0 9px; margin-bottom: 7px; border-bottom: 1px solid var(--rule-soft); white-space: normal; }
+    td.name::before { content: none; }
+    td:last-child { padding-bottom: 0; }
+  }
+
+  @media (max-width: 620px) {
+    td.bars { display: block; text-align: left; }
+    td.bars::before { display: block; margin-bottom: 4px; }
+    .bar { min-width: 0; width: 100%; }
+    .findings article, .caveat { padding-inline: 16px; }
+  }
 </style>
 
 <div class="wrap">
@@ -155,15 +179,15 @@
           <tr><th>채널</th><th class="num">잰 편수</th><th class="num">조회 중앙값</th><th class="num">최고</th><th class="num">길이 중앙값</th></tr>
         </thead>
         <tbody>
-          <tr><td class="name">와우사연</td><td class="num">44</td><td class="num">84,500</td><td class="num">592,000</td><td class="num">106분</td></tr>
-          <tr><td class="name">사연읽어주는남녀</td><td class="num">50</td><td class="num">28,000</td><td class="num">63,000</td><td class="num">63분</td></tr>
-          <tr><td class="name">인생드라마 한편 <span class="thin">표본 적음</span></td><td class="num">3</td><td class="num">23,000</td><td class="num">346,000</td><td class="num">135분</td></tr>
-          <tr><td class="name">노을빛 물든 사연</td><td class="num">31</td><td class="num">12,000</td><td class="num">645,000</td><td class="num">84분</td></tr>
-          <tr><td class="name">우리인생</td><td class="num">50</td><td class="num">8,950</td><td class="num">114,000</td><td class="num">50분</td></tr>
-          <tr><td class="name">황혼사연 라디오</td><td class="num">50</td><td class="num">7,200</td><td class="num">21,000</td><td class="num">54분</td></tr>
-          <tr><td class="name">시간이 멈춘 정거장</td><td class="num">33</td><td class="num">4,400</td><td class="num">403,000</td><td class="num">89분</td></tr>
-          <tr><td class="name">연두빛인생사연 <span class="thin">표본 적음</span></td><td class="num">13</td><td class="num">3,500</td><td class="num">20,000</td><td class="num">94분</td></tr>
-          <tr><td class="name">사연읽어주는채널</td><td class="num">34</td><td class="num">342</td><td class="num">238,000</td><td class="num">63분</td></tr>
+          <tr><td class="name">와우사연</td><td class="num" data-label="잰 편수">44</td><td class="num" data-label="조회 중앙값">84,500</td><td class="num" data-label="최고">592,000</td><td class="num" data-label="길이 중앙값">106분</td></tr>
+          <tr><td class="name">사연읽어주는남녀</td><td class="num" data-label="잰 편수">50</td><td class="num" data-label="조회 중앙값">28,000</td><td class="num" data-label="최고">63,000</td><td class="num" data-label="길이 중앙값">63분</td></tr>
+          <tr><td class="name">인생드라마 한편 <span class="thin">표본 적음</span></td><td class="num" data-label="잰 편수">3</td><td class="num" data-label="조회 중앙값">23,000</td><td class="num" data-label="최고">346,000</td><td class="num" data-label="길이 중앙값">135분</td></tr>
+          <tr><td class="name">노을빛 물든 사연</td><td class="num" data-label="잰 편수">31</td><td class="num" data-label="조회 중앙값">12,000</td><td class="num" data-label="최고">645,000</td><td class="num" data-label="길이 중앙값">84분</td></tr>
+          <tr><td class="name">우리인생</td><td class="num" data-label="잰 편수">50</td><td class="num" data-label="조회 중앙값">8,950</td><td class="num" data-label="최고">114,000</td><td class="num" data-label="길이 중앙값">50분</td></tr>
+          <tr><td class="name">황혼사연 라디오</td><td class="num" data-label="잰 편수">50</td><td class="num" data-label="조회 중앙값">7,200</td><td class="num" data-label="최고">21,000</td><td class="num" data-label="길이 중앙값">54분</td></tr>
+          <tr><td class="name">시간이 멈춘 정거장</td><td class="num" data-label="잰 편수">33</td><td class="num" data-label="조회 중앙값">4,400</td><td class="num" data-label="최고">403,000</td><td class="num" data-label="길이 중앙값">89분</td></tr>
+          <tr><td class="name">연두빛인생사연 <span class="thin">표본 적음</span></td><td class="num" data-label="잰 편수">13</td><td class="num" data-label="조회 중앙값">3,500</td><td class="num" data-label="최고">20,000</td><td class="num" data-label="길이 중앙값">94분</td></tr>
+          <tr><td class="name">사연읽어주는채널</td><td class="num" data-label="잰 편수">34</td><td class="num" data-label="조회 중앙값">342</td><td class="num" data-label="최고">238,000</td><td class="num" data-label="길이 중앙값">63분</td></tr>
         </tbody>
       </table>
     </div>
@@ -178,9 +202,9 @@
           <tr><th>채널</th><th class="num">잰 편수</th><th class="num">조회 중앙값</th><th class="num">최고</th><th class="num">100만 이상</th></tr>
         </thead>
         <tbody>
-          <tr><td class="name">훈작가의 숏드라마</td><td class="num">50</td><td class="num">815,000</td><td class="num">4,800,000</td><td class="num">23편</td></tr>
-          <tr><td class="name">스토리관</td><td class="num">50</td><td class="num">705,500</td><td class="num">6,300,000</td><td class="num">21편</td></tr>
-          <tr><td class="name">심쿵 숏드라마 <span class="thin">표본 적음</span></td><td class="num">10</td><td class="num">1,450</td><td class="num">2,200</td><td class="num">0편</td></tr>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num" data-label="잰 편수">50</td><td class="num" data-label="조회 중앙값">815,000</td><td class="num" data-label="최고">4,800,000</td><td class="num" data-label="100만 이상">23편</td></tr>
+          <tr><td class="name">스토리관</td><td class="num" data-label="잰 편수">50</td><td class="num" data-label="조회 중앙값">705,500</td><td class="num" data-label="최고">6,300,000</td><td class="num" data-label="100만 이상">21편</td></tr>
+          <tr><td class="name">심쿵 숏드라마 <span class="thin">표본 적음</span></td><td class="num" data-label="잰 편수">10</td><td class="num" data-label="조회 중앙값">1,450</td><td class="num" data-label="최고">2,200</td><td class="num" data-label="100만 이상">0편</td></tr>
         </tbody>
       </table>
     </div>
@@ -191,8 +215,8 @@
       <table>
         <thead><tr><th>채널</th><th class="num">쇼츠 중앙</th><th class="num">롱폼 중앙</th><th class="num">롱폼 길이</th></tr></thead>
         <tbody>
-          <tr><td class="name">훈작가의 숏드라마</td><td class="num">815,000</td><td class="num">43,000</td><td class="num">3분</td></tr>
-          <tr><td class="name">심쿵 숏드라마</td><td class="num">1,450</td><td class="num">23,000</td><td class="num">99분</td></tr>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num" data-label="쇼츠 중앙">815,000</td><td class="num" data-label="롱폼 중앙">43,000</td><td class="num" data-label="롱폼 길이">3분</td></tr>
+          <tr><td class="name">심쿵 숏드라마</td><td class="num" data-label="쇼츠 중앙">1,450</td><td class="num" data-label="롱폼 중앙">23,000</td><td class="num" data-label="롱폼 길이">99분</td></tr>
         </tbody>
       </table>
     </div>
@@ -207,15 +231,15 @@
       <table>
         <thead><tr><th>채널</th><th class="num">조회 중앙</th><th class="num">길이</th><th>4,000시간까지 (지속률 10%)</th></tr></thead>
         <tbody>
-          <tr><td class="name">와우사연</td><td class="num">84,500</td><td class="num">106분</td><td><span class="barnote">0.3편</span><span class="bar"><i style="width:3%"></i></span></td></tr>
-          <tr><td class="name">사연읽어주는남녀</td><td class="num">28,000</td><td class="num">63분</td><td><span class="barnote">1.4편</span><span class="bar"><i style="width:12%"></i></span></td></tr>
-          <tr><td class="name">인생드라마 한편</td><td class="num">23,000</td><td class="num">135분</td><td><span class="barnote">0.8편</span><span class="bar"><i style="width:7%"></i></span></td></tr>
-          <tr><td class="name">노을빛 물든 사연</td><td class="num">12,000</td><td class="num">84분</td><td><span class="barnote">2.4편</span><span class="bar"><i style="width:20%"></i></span></td></tr>
-          <tr><td class="name">우리인생</td><td class="num">8,950</td><td class="num">50분</td><td><span class="barnote">5.4편</span><span class="bar"><i style="width:45%"></i></span></td></tr>
-          <tr><td class="name">황혼사연 라디오</td><td class="num">7,200</td><td class="num">54분</td><td><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
-          <tr><td class="name">시간이 멈춘 정거장</td><td class="num">4,400</td><td class="num">89분</td><td><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
-          <tr><td class="name">연두빛인생사연</td><td class="num">3,500</td><td class="num">94분</td><td><span class="barnote">7.3편</span><span class="bar"><i style="width:61%"></i></span></td></tr>
-          <tr><td class="name">사연읽어주는채널</td><td class="num">342</td><td class="num">63분</td><td><span class="barnote">111.6편</span><span class="bar over"><i style="width:100%"></i></span></td></tr>
+          <tr><td class="name">와우사연</td><td class="num" data-label="조회 중앙">84,500</td><td class="num" data-label="길이">106분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">0.3편</span><span class="bar"><i style="width:3%"></i></span></td></tr>
+          <tr><td class="name">사연읽어주는남녀</td><td class="num" data-label="조회 중앙">28,000</td><td class="num" data-label="길이">63분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">1.4편</span><span class="bar"><i style="width:12%"></i></span></td></tr>
+          <tr><td class="name">인생드라마 한편</td><td class="num" data-label="조회 중앙">23,000</td><td class="num" data-label="길이">135분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">0.8편</span><span class="bar"><i style="width:7%"></i></span></td></tr>
+          <tr><td class="name">노을빛 물든 사연</td><td class="num" data-label="조회 중앙">12,000</td><td class="num" data-label="길이">84분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">2.4편</span><span class="bar"><i style="width:20%"></i></span></td></tr>
+          <tr><td class="name">우리인생</td><td class="num" data-label="조회 중앙">8,950</td><td class="num" data-label="길이">50분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">5.4편</span><span class="bar"><i style="width:45%"></i></span></td></tr>
+          <tr><td class="name">황혼사연 라디오</td><td class="num" data-label="조회 중앙">7,200</td><td class="num" data-label="길이">54분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
+          <tr><td class="name">시간이 멈춘 정거장</td><td class="num" data-label="조회 중앙">4,400</td><td class="num" data-label="길이">89분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
+          <tr><td class="name">연두빛인생사연</td><td class="num" data-label="조회 중앙">3,500</td><td class="num" data-label="길이">94분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">7.3편</span><span class="bar"><i style="width:61%"></i></span></td></tr>
+          <tr><td class="name">사연읽어주는채널</td><td class="num" data-label="조회 중앙">342</td><td class="num" data-label="길이">63분</td><td class="bars" data-label="4,000시간까지"><span class="barnote">111.6편</span><span class="bar over"><i style="width:100%"></i></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -226,9 +250,9 @@
       <table>
         <thead><tr><th>채널</th><th class="num">쇼츠 중앙</th><th class="num">1,000만 회까지</th><th class="num">90일 안에 하려면</th></tr></thead>
         <tbody>
-          <tr><td class="name">훈작가의 숏드라마</td><td class="num">815,000</td><td class="num">12편</td><td class="num">하루 0.1편</td></tr>
-          <tr><td class="name">스토리관</td><td class="num">705,500</td><td class="num">14편</td><td class="num">하루 0.2편</td></tr>
-          <tr><td class="name">심쿵 숏드라마</td><td class="num">1,450</td><td class="num">6,897편</td><td class="num">하루 77편</td></tr>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num" data-label="쇼츠 중앙">815,000</td><td class="num" data-label="1,000만 회까지">12편</td><td class="num" data-label="90일 안에 하려면">하루 0.1편</td></tr>
+          <tr><td class="name">스토리관</td><td class="num" data-label="쇼츠 중앙">705,500</td><td class="num" data-label="1,000만 회까지">14편</td><td class="num" data-label="90일 안에 하려면">하루 0.2편</td></tr>
+          <tr><td class="name">심쿵 숏드라마</td><td class="num" data-label="쇼츠 중앙">1,450</td><td class="num" data-label="1,000만 회까지">6,897편</td><td class="num" data-label="90일 안에 하려면">하루 77편</td></tr>
         </tbody>
       </table>
     </div>
