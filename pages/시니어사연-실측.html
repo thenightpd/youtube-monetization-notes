@@ -1,0 +1,284 @@
+<title>시니어 사연 채널 실측</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #f5f7f4;
+    --surface: #ffffff;
+    --ink: #191e1d;
+    --body: #33403e;
+    --muted: #687674;
+    --rule: #dde3df;
+    --rule-soft: #eaefeb;
+    --accent: #0e5f5c;
+    --accent-soft: #d8e9e6;
+    --warn: #9c3a22;
+    --warn-soft: #f4e2dc;
+    --serif: "Gowun Batang", "Apple SD Gothic Neo", "Malgun Gothic", serif;
+    --sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111615;
+      --surface: #191f1e;
+      --ink: #eef2ef;
+      --body: #c4cec9;
+      --muted: #8b9894;
+      --rule: #2b3533;
+      --rule-soft: #222b29;
+      --accent: #5fbdb6;
+      --accent-soft: #1d3634;
+      --warn: #e08768;
+      --warn-soft: #3a241d;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111615;
+    --surface: #191f1e;
+    --ink: #eef2ef;
+    --body: #c4cec9;
+    --muted: #8b9894;
+    --rule: #2b3533;
+    --rule-soft: #222b29;
+    --accent: #5fbdb6;
+    --accent-soft: #1d3634;
+    --warn: #e08768;
+    --warn-soft: #3a241d;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--body);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 56px 96px;
+  }
+  h1, h2, h3 { color: var(--ink); text-wrap: balance; margin: 0; }
+  h1 { font-family: var(--serif); font-size: clamp(30px, 6vw, 44px); line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; }
+  h2 { font-family: var(--serif); font-size: clamp(21px, 3.4vw, 26px); font-weight: 700; line-height: 1.4; }
+  h3 { font-size: 16px; font-weight: 600; }
+  p { margin: 0; max-width: 66ch; }
+  strong { color: var(--ink); font-weight: 600; }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--rule-soft); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 28px; }
+  .lede { margin-top: 18px; font-size: 17px; color: var(--body); }
+
+  section { margin-top: 52px; display: flex; flex-direction: column; gap: 18px; }
+  section > h2 + p { margin-top: -4px; }
+
+  /* 방법 요약 — 계측 기록표 */
+  .method { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .method div { padding: 14px 16px 16px 0; border-right: 1px solid var(--rule-soft); }
+  .method div:last-child { border-right: 0; }
+  .method dt { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .method dd { margin: 4px 0 0; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .tablewrap { overflow-x: auto; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 500px; }
+  th, td { padding: 10px 14px 10px 0; text-align: left; vertical-align: baseline; }
+  th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--rule); padding-top: 12px; }
+  td { border-bottom: 1px solid var(--rule-soft); color: var(--body); }
+  tr:last-child td { border-bottom: 0; }
+  td.name { color: var(--ink); font-weight: 500; white-space: nowrap; }
+  td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; padding-right: 0; }
+  th.num { text-align: right; }
+  td.num { color: var(--ink); }
+  .thin { color: var(--muted); font-size: 13px; }
+
+  /* 문턱 도달 막대 */
+  .bar { position: relative; display: block; height: 7px; border-radius: 0; background: var(--rule-soft); min-width: 120px; margin-top: 7px; }
+  .bar i { position: absolute; inset: 0 auto 0 0; background: var(--accent); display: block; }
+  .bar.over i { background: var(--warn); }
+  .barnote { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  .findings { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .findings article { background: var(--surface); padding: 20px 18px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .findings .big { font-family: var(--mono); font-size: 28px; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+  .findings .big.warn { color: var(--warn); }
+  .findings p { font-size: 14.5px; }
+
+  .caveat { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--warn); padding: 22px 22px 24px; }
+  .caveat ul { margin: 14px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 9px; }
+  .caveat li { font-size: 14.5px; }
+
+  pre { background: var(--surface); border: 1px solid var(--rule); padding: 14px 16px; overflow-x: auto; font-family: var(--mono); font-size: 13px; color: var(--ink); margin: 0; line-height: 1.6; }
+
+  footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--muted); font-size: 13.5px; }
+
+  @media (max-width: 560px) {
+    .method div { border-right: 0; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
+    .method div:last-child { border-bottom: 0; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">직접 측정 · 2026-09-17</p>
+    <h1>시니어 사연 채널은<br>쇼츠와 롱폼 중 어느 쪽이 먼저 수익화에 닿나</h1>
+    <p class="lede">유튜브 공개 목록을 직접 긁어 조회수 중앙값과 영상 길이를 재고, 파트너 프로그램 문턱까지 몇 편이 필요한지 계산했습니다. 남의 자료를 옮긴 것이 아니라 오늘 잰 숫자입니다.</p>
+  </header>
+
+  <section>
+    <h2>어떻게 쟀나</h2>
+    <dl class="method">
+      <div><dt>기준일</dt><dd>2026-09-17</dd></div>
+      <div><dt>도구</dt><dd>yt-dlp 2026.08.19</dd></div>
+      <div><dt>표본</dt><dd>채널당 최근 50편</dd></div>
+      <div><dt>대표값</dt><dd>중앙값</dd></div>
+    </dl>
+    <p>영상을 내려받지 않고 채널의 공개 영상 목록만 받았습니다. 요청 사이에 4초씩 쉬었습니다. 평균 대신 <strong>중앙값</strong>을 쓴 이유는 대박 한 편이 평균을 끌고 가면 채널의 평소 실력이 안 보이기 때문입니다.</p>
+  </section>
+
+  <section>
+    <h2>시니어 사연 롱폼</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>채널</th><th class="num">잰 편수</th><th class="num">조회 중앙값</th><th class="num">최고</th><th class="num">길이 중앙값</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">와우사연</td><td class="num">44</td><td class="num">84,500</td><td class="num">592,000</td><td class="num">106분</td></tr>
+          <tr><td class="name">사연읽어주는남녀</td><td class="num">50</td><td class="num">28,000</td><td class="num">63,000</td><td class="num">63분</td></tr>
+          <tr><td class="name">인생드라마 한편 <span class="thin">표본 적음</span></td><td class="num">3</td><td class="num">23,000</td><td class="num">346,000</td><td class="num">135분</td></tr>
+          <tr><td class="name">노을빛 물든 사연</td><td class="num">31</td><td class="num">12,000</td><td class="num">645,000</td><td class="num">84분</td></tr>
+          <tr><td class="name">우리인생</td><td class="num">50</td><td class="num">8,950</td><td class="num">114,000</td><td class="num">50분</td></tr>
+          <tr><td class="name">황혼사연 라디오</td><td class="num">50</td><td class="num">7,200</td><td class="num">21,000</td><td class="num">54분</td></tr>
+          <tr><td class="name">시간이 멈춘 정거장</td><td class="num">33</td><td class="num">4,400</td><td class="num">403,000</td><td class="num">89분</td></tr>
+          <tr><td class="name">연두빛인생사연 <span class="thin">표본 적음</span></td><td class="num">13</td><td class="num">3,500</td><td class="num">20,000</td><td class="num">94분</td></tr>
+          <tr><td class="name">사연읽어주는채널</td><td class="num">34</td><td class="num">342</td><td class="num">238,000</td><td class="num">63분</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>같은 장르 안에서 <strong>와우사연 84,500 대 사연읽어주는채널 342 — 247배</strong>입니다. 진입자가 많고 대부분은 조회수가 안 나옵니다. 쉬운 축이 아닙니다.</p>
+  </section>
+
+  <section>
+    <h2>쇼츠</h2>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>채널</th><th class="num">잰 편수</th><th class="num">조회 중앙값</th><th class="num">최고</th><th class="num">100만 이상</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num">50</td><td class="num">815,000</td><td class="num">4,800,000</td><td class="num">23편</td></tr>
+          <tr><td class="name">스토리관</td><td class="num">50</td><td class="num">705,500</td><td class="num">6,300,000</td><td class="num">21편</td></tr>
+          <tr><td class="name">심쿵 숏드라마 <span class="thin">표본 적음</span></td><td class="num">10</td><td class="num">1,450</td><td class="num">2,200</td><td class="num">0편</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>훈작가 815,000 대 심쿵 1,450 — <strong>562배</strong>입니다. 쇼츠는 되면 크게 되고 안 되면 아예 안 됩니다.</p>
+
+    <h3>한 채널 안에서도 갈립니다</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>채널</th><th class="num">쇼츠 중앙</th><th class="num">롱폼 중앙</th><th class="num">롱폼 길이</th></tr></thead>
+        <tbody>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num">815,000</td><td class="num">43,000</td><td class="num">3분</td></tr>
+          <tr><td class="name">심쿵 숏드라마</td><td class="num">1,450</td><td class="num">23,000</td><td class="num">99분</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>훈작가는 쇼츠로 터지고 롱폼은 3분짜리를 붙입니다. 심쿵은 쇼츠가 죽고 99분 롱폼으로 물량전을 합니다. 한 장르 안에 정반대 전략이 같이 있습니다.</p>
+  </section>
+
+  <section>
+    <h2>수익화 문턱까지 몇 편인가</h2>
+    <p>파트너 프로그램은 두 갈래입니다. <strong>롱폼 길</strong>은 구독 1,000명 + 최근 12개월 유효 시청시간 4,000시간, <strong>쇼츠 길</strong>은 구독 1,000명 + 최근 90일 쇼츠 조회수 1,000만 회. 둘 중 하나만 채우면 됩니다.</p>
+    <p class="thin">시청시간 = 조회수 × 영상 길이 × 끝까지 본 비율. 지속률을 아주 박하게 10%로 잡았습니다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>채널</th><th class="num">조회 중앙</th><th class="num">길이</th><th>4,000시간까지 (지속률 10%)</th></tr></thead>
+        <tbody>
+          <tr><td class="name">와우사연</td><td class="num">84,500</td><td class="num">106분</td><td><span class="barnote">0.3편</span><span class="bar"><i style="width:3%"></i></span></td></tr>
+          <tr><td class="name">사연읽어주는남녀</td><td class="num">28,000</td><td class="num">63분</td><td><span class="barnote">1.4편</span><span class="bar"><i style="width:12%"></i></span></td></tr>
+          <tr><td class="name">인생드라마 한편</td><td class="num">23,000</td><td class="num">135분</td><td><span class="barnote">0.8편</span><span class="bar"><i style="width:7%"></i></span></td></tr>
+          <tr><td class="name">노을빛 물든 사연</td><td class="num">12,000</td><td class="num">84분</td><td><span class="barnote">2.4편</span><span class="bar"><i style="width:20%"></i></span></td></tr>
+          <tr><td class="name">우리인생</td><td class="num">8,950</td><td class="num">50분</td><td><span class="barnote">5.4편</span><span class="bar"><i style="width:45%"></i></span></td></tr>
+          <tr><td class="name">황혼사연 라디오</td><td class="num">7,200</td><td class="num">54분</td><td><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
+          <tr><td class="name">시간이 멈춘 정거장</td><td class="num">4,400</td><td class="num">89분</td><td><span class="barnote">6.2편</span><span class="bar"><i style="width:52%"></i></span></td></tr>
+          <tr><td class="name">연두빛인생사연</td><td class="num">3,500</td><td class="num">94분</td><td><span class="barnote">7.3편</span><span class="bar"><i style="width:61%"></i></span></td></tr>
+          <tr><td class="name">사연읽어주는채널</td><td class="num">342</td><td class="num">63분</td><td><span class="barnote">111.6편</span><span class="bar over"><i style="width:100%"></i></span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="thin">막대는 12편을 가득 찬 것으로 보고 그린 것입니다. 맨 아래 한 채널만 그 눈금을 한참 넘어갑니다.</p>
+
+    <h3>쇼츠 쪽</h3>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>채널</th><th class="num">쇼츠 중앙</th><th class="num">1,000만 회까지</th><th class="num">90일 안에 하려면</th></tr></thead>
+        <tbody>
+          <tr><td class="name">훈작가의 숏드라마</td><td class="num">815,000</td><td class="num">12편</td><td class="num">하루 0.1편</td></tr>
+          <tr><td class="name">스토리관</td><td class="num">705,500</td><td class="num">14편</td><td class="num">하루 0.2편</td></tr>
+          <tr><td class="name">심쿵 숏드라마</td><td class="num">1,450</td><td class="num">6,897편</td><td class="num">하루 77편</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>여기서 읽을 것 세 가지</h2>
+    <div class="findings">
+      <article>
+        <span class="big">7편</span>
+        <h3>롱폼은 조회수가 낮아도 넘습니다</h3>
+        <p>연두빛인생사연은 중앙 3,500회입니다. 어느 기준으로 봐도 안 되는 숫자인데, 94분이라 7편이면 4,000시간입니다. 길이가 조회수를 메웁니다.</p>
+      </article>
+      <article>
+        <span class="big warn">하루 77편</span>
+        <h3>쇼츠는 터져야만 됩니다</h3>
+        <p>중앙 1,450인 채널이 90일 안에 1,000만 회를 채우려면 이만큼 올려야 합니다. 쇼츠 조회수는 시청시간에 안 잡히고 별도 트랙으로만 계산되기 때문입니다.</p>
+      </article>
+      <article>
+        <span class="big">쇼츠 → 롱폼</span>
+        <h3>그래서 순서가 있습니다</h3>
+        <p>쇼츠는 소재가 먹히는지 싸게 알아보고 구독자를 데려오는 자리입니다. 문턱은 롱폼으로 넘습니다. 훈작가와 심쿵은 같은 구조를 다르게 푼 답입니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>이 숫자를 믿을 때 조심할 것</h2>
+    <div class="caveat">
+      <ul>
+        <li><strong>기준일은 2026년 9월 17일입니다.</strong> 채널은 계속 변합니다. 쓰기 전에 다시 재세요.</li>
+        <li><strong>조회수는 누적입니다.</strong> 오래 올라가 있던 영상이 유리합니다. 채널끼리 비교하는 용도이지 절대값이 아닙니다.</li>
+        <li><strong>유튜브가 주는 조회수는 반올림된 값입니다</strong>(12,000·90,000처럼). 중앙값에는 지장이 없지만 한 자리까지 맞는 숫자는 아닙니다.</li>
+        <li><strong>표본이 작은 채널이 셋 있습니다.</strong> 인생드라마 한편 3편, 연두빛인생사연 13편, 심쿵 쇼츠 10편. 이 셋은 참고만 하세요.</li>
+        <li><strong>지속률 10%는 가정입니다.</strong> 실제 지속률은 채널 분석에서만 보입니다. 이 표에서는 확인하지 않았고, 보수적인 쪽으로 잡았습니다.</li>
+        <li><strong>"유효 시청시간"은 유튜브가 자체 기준으로 셉니다.</strong> 위 계산은 단순 곱셈이라 실제 인정분과 다를 수 있습니다. 방향을 보는 용도입니다.</li>
+        <li><strong>채널 선정은 검색으로 했습니다.</strong> 장르 전체를 대표하지 않습니다. 검색에 안 걸린 채널이 더 많습니다.</li>
+        <li><strong>재지 못한 채널이 있습니다.</strong> 「이야기 좋아」는 검색으로 특정하지 못해 표에 없습니다.</li>
+        <li><strong>수익화 기준 자체는 재검증하지 않았습니다.</strong> 구독 1,000명·시청시간 4,000시간·쇼츠 1,000만 회는 공식 문서 기준이며, 기수 시작 전에 고객센터에서 다시 확인하세요.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>다시 재는 방법</h2>
+    <p>채널마다 이 명령을 돌리고, 나온 조회수와 길이의 중앙값을 구하면 위 표가 됩니다. 쇼츠는 주소 끝을 <code>/shorts</code>로 바꿉니다.</p>
+    <pre>yt-dlp --flat-playlist --playlist-end 50 \
+  --print "%(view_count)s %(duration)s" \
+  "&lt;채널주소&gt;/videos"</pre>
+  </section>
+
+  <footer>측정·계산 2026-09-17 · 유튜브 자동화 챌린지 1기 참고 자료</footer>
+</div>
